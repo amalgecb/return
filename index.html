@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <title>RETURNS CALC</title>
+</head>
+  <h4 class="w3-container w3-center w3-blue">RETURNS CALCULATOR</h4>
+<body>
+    
+  <table>
+    <tr>
+  <td>Enter subscription amount:</td>
+    
+  <td><input type ="number" id="subamnt"></td>
+  </tr>
+   <tr><td>Enter duration: </td>
+  <td><input type ="number" id="duration"></td></tr>
+   <tr><td>Enter prized amount: </td>
+  <td><input type ="number" id="remtdur"></td></tr>
+   <tr><td>Enter installment in which prized: </td>
+  <td><input type ="number" id="remtamnt"><div id="radio"></div></td></tr>
+    
+  
+  </table>
+  
+    
+   <div class="w3-center"><button type="button" id="myButton" class="w3-btn w3-green ">Click</button></div><br>
+  
+
+  <div id = "sruthi" class="w3-center w3-green " style="font-size: 30px;"></div>
+    <script>
+                  var subamnt = document.getElementById("subamnt").value ;
+            var durat = document.getElementById("duration").value;
+          var prizd_amnt = parseInt(document.getElementById("remtdur").value);
+          var inst_remt = document.getElementById("remtamnt").value;
+          var month_rem = (durat-inst_remt-1);
+         var fut_liab= month_rem*subamnt;
+          var net_prizedamnt = prizd_amnt-(subamnt*durat*0.009)-236;
+          
+          var csdt_intp=8;
+          var nfd_intp=7.1;
+          var std_two = 3.25;
+          var std_three= 4.25;
+          var std_six =4.75;
+          var std_oneyr= 5.5;
+      document.getElementById("remtamnt").oninput=function(){
+        if(this.value>month_rem) {
+          document.getElementById("radio").innerHTML="<input type='radio' value='1'>Option 1"
+        }
+      }
+      
+        document.getElementById("myButton").onclick = function(){
+          
+
+               
+         if(fut_liab>prizd_amnt) {
+           let csdt_amount= parseInt(prizd_amnt*((csdt_intp/1200)*month_rem));
+           document.getElementById("sruthi").innerHTML= csdt_amount+prizd_amnt;
+           
+         } else{
+          
+          if (month_rem>=12){ 
+            
+            let csdt_amount= parseInt(fut_liab*((csdt_intp/1200)*month_rem));
+            let nfd_amount = parseInt((net_prizedamnt-fut_liab)*(nfd_intp/1200)*month_rem);
+            let total_przmon=csdt_amount+nfd_amount+prizd_amnt;
+            
+            
+          document.getElementById("sruthi").innerHTML= total_przmon;
+        }
+           else if(month_rem<=1){ 
+        
+          let amount_ret= parseInt(net_prizedamnt*((nfd_intp/1200)*12))
+          let total_przmon = net_prizedamnt+amount_ret;
+          
+          document.getElementById("sruthi").innerHTML= "Since your termination date is in less than a month after prize money due, you will get returns only if you deposit for a year. The return is " +" "+ total_przmon;
+        }
+        
+      else if(month_rem<=2)
+        { 
+          let csdt_amount= parseInt(fut_liab*((std_two/1200)*month_rem));
+            let nfd_amount = parseInt((net_prizedamnt-fut_liab)*(std_two/1200)*month_rem);
+            let total_przmon=csdt_amount+nfd_amount+prizd_amnt;
+            
+            
+          document.getElementById("sruthi").innerHTML= total_przmon;
+          
+            
+            }else if (month_rem<=3){
+              let csdt_amount= parseInt(fut_liab*((std_three/1200)*month_rem));
+            let nfd_amount = parseInt((net_prizedamnt-fut_liab)*(std_three/1200)*month_rem);
+            let total_przmon=csdt_amount+nfd_amount+prizd_amnt;
+            
+            
+          document.getElementById("sruthi").innerHTML= total_przmon;
+            }else if(month_rem<=6){
+          
+               let csdt_amount= parseInt(fut_liab*((std_six/1200)*month_rem));
+            let nfd_amount = parseInt((net_prizedamnt-fut_liab)*(std_six/1200)*month_rem);
+            let total_przmon=csdt_amount+nfd_amount+prizd_amnt;
+            
+            
+          document.getElementById("sruthi").innerHTML= total_przmon;
+            }else{
+               let csdt_amount= parseInt(fut_liab*((std_oneyr/1200)*month_rem));
+            let nfd_amount = parseInt((net_prizedamnt-fut_liab)*(std_oneyr/1200)*month_rem);
+            let total_przmon=csdt_amount+nfd_amount+prizd_amnt;
+            
+            
+          document.getElementById("sruthi").innerHTML= total_przmon;
+            }
+         }
+      }
+      
+      
+    </script>
+</body>
+</html>
